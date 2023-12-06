@@ -1,0 +1,24 @@
+{{ $url := .Get 0 }}
+{{ $csv := getCSV "," $url }}
+
+<table>
+    <thead>
+        <tr>
+        <th>Order</th>
+        <th>Name</th>
+        <th>Points</th>
+        </tr>
+      </thead>
+    <tbody>
+        {{ range $i, $r := $csv}}
+            {{ if ne $i 0 }}
+                <tr>
+                    <td>{{ index $r 0 }}</td>
+                    <td><a href="/polkadot/{{ index $r 2 }}/">{{ index $r 1 }}</a></td>
+                    <td>{{ index $r 4 }}</td>                                        
+                </tr>
+            {{ end }}
+    {{ end }}
+    </tbody>               
+</table>
+

@@ -1,0 +1,11 @@
+<!-- Uses bootstrap layout -->
+<div class="container">
+  <div class="row">
+  {{ range split .Inner "<--->" }}
+    <div class="col-sm">
+      {{ . | $.Page.RenderString }}
+    </div>
+  {{ end }}
+  </div>
+</div>
+

@@ -1,0 +1,26 @@
+{{ $url := .Get 0 }}
+{{ $csv := getCSV "," $url }}
+
+<table>
+    <thead>
+        <tr>
+        <th>Location</th>
+        <th>Number</th>
+        <th>Score</th>
+        <th>Maybe blacklist</th>
+        </tr>
+      </thead>
+    <tbody>
+        {{ range $i, $r := $csv}}
+            {{ if ne $i 0 }}
+                <tr>
+                    <td>{{ index $r 1 }}</td>
+                    <td>{{ index $r 2 }}</td>
+                    <td>{{ index $r 3 }}</td>  
+                    <td>{{ index $r 4 }}</td>                                        
+                </tr>
+            {{ end }}
+    {{ end }}
+    </tbody>               
+</table>
+

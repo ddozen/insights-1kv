@@ -1,0 +1,14 @@
+[Unit]
+Description=1kv insights - build website and upload
+
+[Service]
+User=USER
+Group=USER
+ExecStart=/home/USER/dashboard-1kv/python/generate_web_pages.py
+WorkingDirectory=/home/USER/dashboard-1kv/python/
+KillSignal=SIGINT
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
