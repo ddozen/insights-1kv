@@ -36,16 +36,11 @@ Your total score at 1kv is the sum of several individual scores, multiplied by a
 | ----------- | ----------- |---|
 | SpanInclusion | Active for last 28 eras | $spanInclusion$ |
 | Inclusion | Active for last 84 eras      | $inclusion$       |
-| OpenGov democracy | Consistency in voting at referenda | $openGov$ |
-| OpenGov delegations | Amount of delegations for voting       | $openGovDelegations$       |
 | Nominators | Amount of nominations (except by 1kv) | $nominatorStake$ |
 | Provider | Provider shared by other validators | $provider$ |
-| Gov 1 delegations 💤 | Amount of delegations for voting       | $delegations$       |
 | Bonded | Amount of self bond | $bonded$ |
 | Location | Location shared by other validators | $location$ |
 | Nominated | Last time nominated by 1kv | $nominated$ |
-| Gov 1 democracy 💤 | Consistency in voting at referenda | $democracy$ |
-| Council 💤 | Bond for council elections | $councilStake$ |
 | Region | Region shared by other validators   | $region$        |
 | Country | Country shared by other validators | $country$ |
 | Rank | Rank in 1kv | $rank$ |
@@ -68,15 +63,9 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 
 ![Inclusion](STASH_era_score-inclusion.png)
 
-![OpenGov democracy](STASH_era_score-openGov.png)
-
 ![Nominators](STASH_era_score-nominatorStake.png)
 
-![Gov 1 delegations](STASH_era_score-delegations.png)
-
 ![Location](STASH_era_score-location.png)
-
-![Gov 1 Democracy](STASH_era_score-democracy.png)
 
 ![Region](STASH_era_score-region.png)
 
@@ -87,15 +76,11 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 <--->
 ![Span inclusion](STASH_era_score-spanInclusion.png)
 
-![OpenGov delegations](STASH_era_score-openGovDelegations.png)
-
 ![Provider](STASH_era_score-provider.png)
 
 ![Bonded](STASH_era_score-bonded.png)
 
 ![Nominated](STASH_era_score-nominated.png)
-
-![Council](STASH_era_score-councilStake.png)
 
 ![Country](STASH_era_score-country.png)
 
