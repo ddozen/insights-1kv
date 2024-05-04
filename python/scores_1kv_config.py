@@ -2,11 +2,63 @@
 
 import pandas as pd
 import numpy as np
+import requests
 import matplotlib
+import os
+import json
 import matplotlib.pyplot as plt
 import matplotlib.style as mplstyle
 from matplotlib.ticker import MaxNLocator
 from matplotlib.ticker import ScalarFormatter
+def fetch_data():
+    url = "https://kusama.w3f.community/scoremetadata"
+    try:
+        response = requests.get(url, timeout=10)  # added a timeout for the request
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Failed to retrieve data: Status code", response.status_code)
+            return None
+    except requests.exceptions.RequestException as e:
+        print("Request failed:", e)
+        return None
+
+
+def save_data_to_disk(data):
+    with open('weights_data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
+def load_data_from_disk():
+    try:
+        with open('weights_data.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("No local copy of weights data found.")
+        return {}
+
+def format_data(data):
+    if data:
+        _score_tmp = {
+            "inclusion": str(data.get("inclusionWeight", 0)),
+            "spanInclusion": str(data.get("spanInclusionWeight", 0)),
+            "discovered": str(data.get("discoveredAtWeight", 0)),
+            "nominated": str(data.get("nominatedAtWeight", 0)),
+            "rank": str(data.get("rankWeight", 0)),
+            "bonded": str(data.get("bondedWeight", 0)),
+            "faults": "5",  # Placeholder value
+            "offline": str(data.get("offlineWeight", 0)),
+            "location": str(data.get("locationWeight", 0)),
+            "aggregate": "0",  # Placeholder value
+            "randomness": "1.15",
+            "total": "0",  # Placeholder value
+            "nominatorStake": str(data.get("nominatorStakeWeight", 0)),
+            "region": str(data.get("regionWeight", 0)),
+            "country": str(data.get("countryWeight", 0)),
+            "provider": str(data.get("providerWeight", 0))
+        }
+        return _score_tmp
+    else:
+        return {}
 
 # TODO: 👥 means it is shared over all identities
 _descr_scores = {
@@ -19,10 +71,10 @@ _descr_scores = {
         "score.faults": "Faults: Number of on chain faults",
         "score.offline": "Offline: Offline during this week", 
         "score.location": "Location: Location shared by other validators",
-        "score.democracy": "Gov 1 democracy: Consistency in referenda voting",
-        "score.openGov": "OpenGov democracy: Consistency in referenda voting",        
-        "score.delegations": "Gov 1 delegations to you",
-        "score.councilStake": "Council: Bond for council elections",
+        # "score.democracy": "Gov 1 democracy: Consistency in referenda voting",
+        # "score.openGov": "OpenGov democracy: Consistency in referenda voting",        
+        # "score.delegations": "Gov 1 delegations to you",
+        # "score.councilStake": "Council: Bond for council elections",
         "score.aggregate": "Aggregate: Total of all scores",
         "score.randomness": "Randomness: Random multiplicative factor",
         "score.total": "Total score: Score with random factor",
@@ -30,7 +82,7 @@ _descr_scores = {
         "score.region": "Region: Region shared by other validators",
         "score.country": "Country: Country shared by other validators",
         "score.provider": "Provider: Provider shared by other validators",
-        "score.openGovDelegations": "OpenGov delegations to any of your identities",
+        # "score.openGovDelegations": "OpenGov delegations to any of your identities",
         }
 descr_scores = {}
 descr_scores['kusama'] = _descr_scores.copy()
@@ -40,29 +92,18 @@ descr_scores['polkadot'] = _descr_scores.copy()
 #  council ->    councilStake  and   nominators -> nominatorStake
 # From constraints.tx    -> new: https://github.com/w3f/1k-validators-be/blob/master/packages/gateway/config/main.sample.json
 # https://github.com/w3f/1k-validators-be/blob/master/helmfile.d/config/kusama/otv-backend-prod.yaml.gotmpl#L55
-_score_tmp =  {
-"inclusion": "200",
-"spanInclusion": "200",
-"discovered": "5",
-"nominated": "30",
-"rank": "5",  # Should be 5 from file!! USE 30 ?
-"bonded": "50",
-"faults": "5",
-"offline": "2",
-"location": "40",
-"councilStake": "10", # stored as council in constraints.tx
-"democracy": "30",
-"aggregate": "0", # TODO CALC
-"randomness": "1.15", # const randomness = 1 + Math.random() * 0.15; https://github.com/w3f/1k-validators-be/blob/1ff144c96c7105d102a8206e982dea3a8f405615/packages/common/src/constraints.ts
-"total": "0",
-"nominatorStake": "100", # stored as nominators in constraints.tx
-"delegations": "60",
-"region": "10",
-"country": "10",
-"provider": "100",
-"openGov": "100",
-"openGovDelegations": "100"
-}
+
+
+data = fetch_data()
+if data:
+    # Format the data
+    _score_tmp = format_data(data)
+    # Save the data to disk
+    save_data_to_disk(_score_tmp)
+else:
+    # Load data from disk if API fails
+    _score_tmp = load_data_from_disk()
+
 score_tmp = {}
 score_tmp['kusama'] = _score_tmp.copy()
 score_tmp['polkadot'] = _score_tmp.copy()

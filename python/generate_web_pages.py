@@ -62,11 +62,11 @@ def generate(chain):
           "commission": "$COMMISSION$",
           "rank": "$RANK$",
           "faults": "$NB-FAULTS$"}     
-        for key, value in subs.items():   
-            with fileinput.FileInput(addr_file_index, inplace=True) as file:
+        sys.stdout.reconfigure(encoding='utf-8')
+        for key, value in subs.items():
+            with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:
                 for line in file:
                     print(line.replace(value, f"{row[key]}"), end='')
-
         # Subs for Individual scores: statistics eg '$inclusion$': 'score.inclusion'
         subs = {f"${v.split('.')[-1]}$" : v  for v in list(descr_scores[chain].keys())}
         for key, value in subs.items():   
@@ -77,16 +77,22 @@ def generate(chain):
                 score_str = f"{row[value]:.1f}" 
                 max_str = f"{bound_scores[chain][value][1]:.0f}"
                                 
-            with fileinput.FileInput(addr_file_index, inplace=True) as file:
+            with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:
                 for line in file:           
                     print(line.replace(key, f"{score_str}/{max_str}"), end='')
         
         # Subs for Score retrieved from 1kv backend on $DUMP_DATETIME$. Score last calculated by backend on $SCORE_DATETIME$.
         ### DO NOT USE "DATETIME" SINCE USED ABOVE. INSTEAD USE "DATE_TIME"
-        subs = {"$DUMP_DATE_TIME$": row["dump.datetime"].strftime("%B %d, %Y at %-I:%M:%S %p UTC"),
-        "$SCORE_DATE_TIME$": row["score.datetime"].strftime("%B %d, %Y at %-I:%M:%S %p UTC")}
+        print( row["score.datetime"])
+
+        
+        subs = {
+        "$DUMP_DATE_TIME$": row["dump.datetime"].strftime("%B %d, %Y at %I:%M:%S %p UTC").replace(' at 0', ' at '),
+        "$SCORE_DATE_TIME$": row["score.datetime"].strftime("%B %d, %Y at %I:%M:%S %p UTC").replace(' at 0', ' at ')
+        }
+
         for key, value in subs.items():   
-            with fileinput.FileInput(addr_file_index, inplace=True) as file:
+            with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:
                 for line in file:
                     print(line.replace(key, value), end='')
 
@@ -98,7 +104,7 @@ def generate(chain):
           "$ANGEL_LOCATION_TH_SCORE$": f"{row['th-score.location']:.1f}",
           "$ANGEL_DELAY_SCORE$": format_time_delta(diff)}
         for key, value in subs.items():   
-            with fileinput.FileInput(addr_file_index, inplace=True) as file:
+            with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:
                 for line in file:
                     print(line.replace(key, value), end='')
         

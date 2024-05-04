@@ -1,0 +1,18 @@
+{
+    "inclusion": "220",
+    "spanInclusion": "220",
+    "discovered": "30",
+    "nominated": "100",
+    "rank": "50",
+    "bonded": "50",
+    "faults": "5",
+    "offline": "2",
+    "location": "40",
+    "aggregate": "0",
+    "randomness": "1.15",
+    "total": "0",
+    "nominatorStake": "100",
+    "region": "10",
+    "country": "10",
+    "provider": "100"
+}

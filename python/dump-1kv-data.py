@@ -41,7 +41,7 @@ def dump(url, feather_path):
 
     df = pandas.json_normalize(req.json())
     # Contains integers and 'None' field. Save as string for now
-    df['openGovDelegations.track'] = df['openGovDelegations.track'].astype('str')
+    # df['openGovDelegations.track'] = df['openGovDelegations.track'].astype('str')
     
     cur_time = int(time.time())
     file_name = str(cur_time) + ".feather"
