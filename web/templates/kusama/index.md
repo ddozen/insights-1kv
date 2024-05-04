@@ -67,8 +67,6 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 
 ![Location](STASH_era_score-location.png)
 
-![Gov 1 Democracy](STASH_era_score-democracy.png)
-
 ![Region](STASH_era_score-region.png)
 
 
