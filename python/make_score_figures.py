@@ -59,7 +59,6 @@ def merge_dumps(chain):
 def compute_scores(chain):  
     # Load files  
     df_1kv = pd.read_feather(PATH_TMP / chain / "df_1kv.feather")
-    print(df_1kv)
     df_era_reward_onchain = pd.read_feather(PATH_TMP / chain / "df_era_reward_onchain.feather")
     stash_1kv = pickle.load(open(PATH_TMP / chain / "stash_1kv.p", "rb"))
     start_era_onchain = read_onchain_era_start_file(PATH_ONCHAIN / chain / "on_chain_era_start.feather")
