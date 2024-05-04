@@ -40,7 +40,7 @@ def dump(url, feather_path):
     # TODO: Write JSON
 
     df = pandas.json_normalize(req.json())
-    # Contains integers and 'None' field. Save as string for now
+    df['commission'] = df['commission'].replace(1e-07, 0)
     # df['openGovDelegations.track'] = df['openGovDelegations.track'].astype('str')
     
     cur_time = int(time.time())
