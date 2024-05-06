@@ -29,8 +29,6 @@ Nb of faults: $NB-FAULTS$
 
 Your total score at 1kv is the sum of several individual scores, multiplied by a small random factor.
 
-{{< alert icon="👉" text="Scores related to Gov 1 are decreasing in value over time since Gov 1 has been phased out on Kusama. These scores are indicated with a 💤 below." />}}
-
 
 | Score   | Explanation   | Points |
 | ----------- | ----------- |---|

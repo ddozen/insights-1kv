@@ -4,8 +4,8 @@ Description=1kv dashboard - dump json file
 [Service]
 User=USER
 Group=USER
-ExecStart=/home/USER/dashboard-1kv/python/dump-1kv-data.py
-WorkingDirectory=/home/USER/dashboard-1kv/python/
+ExecStart=/home/USER/misc/insights-1kv/python/dump-1kv-data.py
+WorkingDirectory=/home/USER/misc/insights-1kv/python/
 KillSignal=SIGINT
 Restart=always
 RestartSec=60

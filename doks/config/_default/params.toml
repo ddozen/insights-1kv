@@ -12,7 +12,7 @@ description = "Insights in the 1kv programme and its validators."
 ## Open Graph
 images = ["logo.png"]
 ogLocale = "en_US"
-domainTLD = "insights.math-crypto.com"
+domainTLD = "insights.dozenodes.com"
 titleHome = "Insights in the 1kv programme of Kusama and Polkadot"
 
 # ## Twitter Cards
@@ -68,7 +68,7 @@ fillImage = "1270x740 Center" # normalize image size
 
 # Footer
 # footer = "Powered by <a class=\"text-muted\" href=\"https://www.netlify.com/\">Netlify</a>, <a class=\"text-muted\" href=\"https://gohugo.io/\">Hugo</a>, and <a class=\"text-muted\" href=\"https://getdoks.org/\">Doks</a>"
-footer = "Brought to you by <a href=\"https://www.math-crypto.com/\">Math Crypto</a> &nbsp;&nbsp; ♡ DOT: <a href=\"https://polkadot.subscan.io/account/16CxXYoq9joofWE13zWuWBfd4tx3kQhXJECLLkhMLgWjYyHG\"> 16Cx...YyHG</a> and ♡ KSM: <a href=\"https://kusama.subscan.io/account/GU77syTfPXdzKCuqASura9ZKgxmD2rEDhj89c9TGL6vc9Qw\"> GU77...c9Qw</a>"
+footer = "Otiginal code by <a href=\"https://www.math-crypto.com/\">Math Crypto</a> &nbsp;&nbsp; ♡ DOT: <a href=\"https://polkadot.subscan.io/account/16CxXYoq9joofWE13zWuWBfd4tx3kQhXJECLLkhMLgWjYyHG\"> 16Cx...YyHG</a> and ♡ KSM: <a href=\"https://kusama.subscan.io/account/GU77syTfPXdzKCuqASura9ZKgxmD2rEDhj89c9TGL6vc9Qw\"> GU77...c9Qw</a> Fork by <a href=\"https://github.com/ddozen/insights-1kv/\">DOZENODES</a>"
 
 # Feed
 copyRight = "Copyright (c) 2022 Math Crypto"

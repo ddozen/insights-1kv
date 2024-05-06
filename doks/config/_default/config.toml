@@ -1,4 +1,4 @@
-baseurl = "https://insights.math-crypto.com"
+baseurl = "https://insights.dozenodes.com"
 canonifyURLs = false
 disableAliases = true
 disableHugoGeneratorInject = true

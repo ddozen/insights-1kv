@@ -215,7 +215,7 @@ def upload_website():
     t1 = time.time()
     my_env = os.environ.copy()
     my_env["PATH"] = "/usr/bin:" + my_env["PATH"]
-    cmd_rclone = f"rclone sync --stats-log-level NOTICE --stats 5m {PATH_WEBSITE} InsightWebsite:./public_html"
+    cmd_rclone = f"rclone sync --stats-log-level NOTICE --stats 5m {PATH_WEBSITE} InsightWebsite:./"
     out = subprocess.run(cmd_rclone, shell=True, capture_output=True, cwd=PATH_DOKS_ROOT, env=my_env)
     logging.info(f"   Done with uploading in {time.time()-t1} sec")
 
