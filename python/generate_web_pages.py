@@ -185,7 +185,7 @@ def build_website():
     my_env = os.environ.copy()
     # TODO: put in env option -> ask for a sym link to a standard location?
     my_env["PATH"] = "~/.nvm/versions/node/v19.1.0/bin:" + my_env["PATH"]
-    out = subprocess.run("npm run build", shell=True, capture_output=True, cwd=PATH_DOKS_ROOT, env=my_env)
+    out = subprocess.run(" /usr/bin/npm run build", shell=True, capture_output=True, cwd=PATH_DOKS_ROOT, env=my_env)
     if out.returncode==0:
         logging.info("   Building done.")
     else:

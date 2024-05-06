@@ -141,25 +141,25 @@ LQ_DFT = 0.1
 UQ_DFT = 0.9
     
 _quantile_bounds =  {
-"inclusion": np.array([0.2, 0.75]),
-"spanInclusion": np.array([0.2, 0.75]),
+"inclusion": np.array([0.05, 0.95]),
+"spanInclusion": np.array([0.05, 0.95]),
 "discovered": np.array([LQ_DFT, UQ_DFT]), 
 "nominated": np.array([LQ_DFT, UQ_DFT]), 
 "rank": np.array([LQ_DFT, UQ_DFT]), 
 "bonded": np.array([0.05, 0.85]),
 "faults": np.array([LQ_DFT, UQ_DFT]), 
 "offline": np.array([LQ_DFT, UQ_DFT]), 
-"location": np.array([0.1, 0.95]),
+"location": np.array([0, 1]),
 "councilStake": np.array([LQ_DFT, UQ_DFT]),  # very special rule
 "democracy": np.array([LQ_DFT, UQ_DFT]), # special rule
 "aggregate": "0", # TODO CALC
 "randomness": "1.15", # TODO random uniform or Gaussian?  const randomness = 1 + Math.random() * 0.15; https://github.com/w3f/1k-validators-be/blob/1ff144c96c7105d102a8206e982dea3a8f405615/packages/common/src/constraints.ts
 "total": "0",
-"nominatorStake": np.array([0.1, 0.95]), # special rule: active and inactive as sqrt https://github.com/w3f/1k-validators-be/blob/master/packages/common/src/constraints.ts#L436
+"nominatorStake": np.array([0.05, 0.95]), # special rule: active and inactive as sqrt https://github.com/w3f/1k-validators-be/blob/master/packages/common/src/constraints.ts#L436
 "delegations": np.array([0.1, 0.95]), # also sqrt
-"region": np.array([0.1, 0.95]),
-"country": np.array([0.1, 0.95]),
-"provider": np.array([0.1, 0.95]),
+"region": np.array([0, 1]),
+"country": np.array([0, 1]),
+"provider": np.array([0, 1]),
 "openGov": np.array([LQ_DFT, UQ_DFT])
 }
 
