@@ -2,8 +2,39 @@
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-9">
     <h1 class="text-center">{{ .Title }}</h1>
-    <p class="text-center"><small>Updated on {{ now | time.Format ":date_long" }} at {{ now | time.Format ":time_long"  }}.</small></p>
+    <p class="text-center"><small>updated on {{ now | time.Format ":date_long" }} at {{ now | time.Format ":time_long"  }}.</small></p>
+    <p class="text-center"><small><input type="text" id="searchInput" placeholder="Search the table..."></small></p>
+
     {{ with .Content -}}<div class="text-center">{{ . }}</div>{{ end -}}
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('keyup', function(){
+    let filter = searchInput.value.toUpperCase();
+    let table = document.getElementById('TableId');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 0; i < tr.length; i++) {
+      let tds = tr[i].getElementsByTagName('td');
+      let found = false;
+      for (let j = 0; j < tds.length; j++) {
+        let td = tds[j];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) {
+        tr[i].style.display = '';
+      } else {
+        tr[i].style.display = 'none';
+      }
+    }
+  });
+});
+</script>
 {{ end }}
