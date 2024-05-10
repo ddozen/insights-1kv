@@ -218,13 +218,13 @@ def make_figs_active(active_eras, address, save_dir=None):
 
     # Create line plot for the activity
     fig, ax = plt.subplots(figsize=(8, 4.8))
-    ax.plot(eras, activity, 'b-', label='Activity Status')  # Blue line for activity status
+    ax.plot(eras, activity, 'b-')  # Blue line for activity status
 
     # Suppose we have updates (you need to define how updates are determined)
     # Example updates, using the last 10 eras as updates
     updates = activity  # Replace this logic with your update determination
     update_eras = eras
-    ax.plot(update_eras, updates, 'bo', label='Updates')  # Blue points for updates
+    ax.plot(update_eras, updates, 'bo')  # Blue points for updates
 
     # Set bounds for y-axis, assuming the scores are binary (0 or 1)
     bound_scores = [0, 1]
