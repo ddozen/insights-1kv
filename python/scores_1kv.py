@@ -236,7 +236,6 @@ def make_figs_active(active_eras, address, save_dir=None):
 
     # Set titles and labels
     ax.set_title("Validator Activity Over Eras")
-    ax.set_xlabel("Eras")
     ax.set_ylabel("Active (1) or Inactive (0)")
     ax.grid(True)
 

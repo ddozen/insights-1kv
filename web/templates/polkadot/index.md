@@ -61,13 +61,13 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 
 ![Inclusion](STASH_era_score-inclusion.png)
 
+![Active set inclusion](STASH_era_activity.png)
+
 ![Nominators](STASH_era_score-nominatorStake.png)
 
 ![Location](STASH_era_score-location.png)
 
 ![Region](STASH_era_score-region.png)
-
-![Active set inclusion](STASH_era_activity.png)
 
 
 
@@ -76,11 +76,11 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 <--->
 ![Span inclusion](STASH_era_score-spanInclusion.png)
 
+![Nominated](STASH_era_score-nominated.png)
+
 ![Provider](STASH_era_score-provider.png)
 
 ![Bonded](STASH_era_score-bonded.png)
-
-![Nominated](STASH_era_score-nominated.png)
 
 ![Country](STASH_era_score-country.png)
 
