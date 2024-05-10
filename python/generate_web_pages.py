@@ -55,8 +55,6 @@ def generate(chain):
             for line in file:
                 # Hugo wants the time in UTC if no offset.
                 print(line.replace("DATETIME", f"{datetime.now(timezone.utc).isoformat()}"), end='')
-        print(row)
-        exit()
         # Subs for header
         subs = {"stash": "STASH",
           "name": "$TELEMETRY-NAME$" ,
