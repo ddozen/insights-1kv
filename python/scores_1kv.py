@@ -222,8 +222,8 @@ def make_figs_active(active_eras, address, save_dir=None):
 
     # Suppose we have updates (you need to define how updates are determined)
     # Example updates, using the last 10 eras as updates
-    updates = activity[-10:]  # Replace this logic with your update determination
-    update_eras = eras[-10:]
+    updates = activity  # Replace this logic with your update determination
+    update_eras = eras
     ax.plot(update_eras, updates, 'bo', label='Updates')  # Blue points for updates
 
     # Set bounds for y-axis, assuming the scores are binary (0 or 1)
