@@ -59,9 +59,14 @@ def merge_dumps(chain):
 def compute_scores(chain):  
     # Load files  
     df_1kv = pd.read_feather(PATH_TMP / chain / "df_1kv.feather")
+
     df_era_reward_onchain = pd.read_feather(PATH_TMP / chain / "df_era_reward_onchain.feather")
     stash_1kv = pickle.load(open(PATH_TMP / chain / "stash_1kv.p", "rb"))
     start_era_onchain = read_onchain_era_start_file(PATH_ONCHAIN / chain / "on_chain_era_start.feather")
+
+    number_of_eras = start_era_onchain.shape[0]
+    eras_list = start_era_onchain.index.tolist()
+
 
     ## Simple extraction of scores and stats 
     # 28 Oct 2022: Valid is always None for recent. With drop na they get all removed!
@@ -88,6 +93,52 @@ def compute_scores(chain):
     ## Era points
     # turn into wide for easier visual
     era_reward_onchain = df_era_reward_onchain.pivot(index="address", columns="era", values="points").replace(np.nan, 0)
+    # print(era_reward_onchain)
+    try:
+        era_reward_onchain200 = pd.read_feather(PATH_ONCHAIN / chain / "validator_active_data.feather")
+        print("File loaded successfully.")
+    except FileNotFoundError:
+        era_reward_onchain200 = pd.DataFrame()
+        print("File not found. Creating an empty DataFrame.")
+    # Assuming era_reward_onchain200 and era_reward_onchain are already defined DataFrames
+
+    # Check if era_reward_onchain200 is empty
+    if era_reward_onchain200.empty:
+        # If empty, directly use all era columns from era_reward_onchain
+        # Ensure columns are treated as strings to check for digits
+        new_eras = [col for col in era_reward_onchain.columns if str(col).isdigit()]
+        era_reward_onchain200 = era_reward_onchain[new_eras]
+    else:
+        # If not empty, identify the latest era in the current DataFrame
+        # Convert column names to string to handle the integer type
+        latest_era = max(int(col) for col in era_reward_onchain200.columns if str(col).isdigit())
+
+        # Filter out new data that includes eras greater than the latest_era
+        new_eras = [col for col in era_reward_onchain.columns if str(col).isdigit() and int(col) > latest_era]
+
+        # If there are new eras to add, combine the new era data with the existing DataFrame
+        if new_eras:
+            new_data = era_reward_onchain[new_eras]
+            era_reward_onchain200 = pd.concat([era_reward_onchain200, new_data], axis=1)
+
+    # Ensure the DataFrame only retains the last 200 columns (eras)
+    if len(era_reward_onchain200.columns) > NB_ERAS_TO_PROCESS:
+        era_reward_onchain200 = era_reward_onchain200.iloc[:, -NB_ERAS_TO_PROCESS:]
+    
+    era_reward_onchain200.to_feather(PATH_ONCHAIN / chain / "validator_active_data.feather") 
+
+    # Check if each era in the list actually exists in the DataFrame columns
+    existing_eras = [era for era in eras_list if era in era_reward_onchain200.columns]
+
+    # Use the existing eras to filter the DataFrame
+    filtered_df = era_reward_onchain200.loc[:, existing_eras]
+
+    logging.info("Making activity figures")
+    save_dir = PATH_NEWFIGS / chain
+
+    # for addr in df_stash['stash']:    
+    #     make_figs_active(filtered_df, addr, save_dir)    
+    Parallel(n_jobs=4)(delayed(make_figs_active)(filtered_df, a, save_dir) for a in df_stash['stash']) 
 
     # Calculate time stamps of eras so we can compare with data reported by 1kv json
     if chain=="kusama":

@@ -8,6 +8,7 @@ import matplotlib.style as mplstyle
 from matplotlib.ticker import MaxNLocator
 from matplotlib.ticker import ScalarFormatter
 from scores_1kv_config import *
+from time import sleep
 
 def read_1kv_json(json_dir, oldest_datetime=-1):
     """
@@ -198,6 +199,57 @@ def recompute_score_from_quantile(chain, last_1kv, field, with_blacklist):
 
 
 ### FIGURES    
+def make_figs_active(active_eras, address, save_dir=None):    
+    # Setup plot configuration and data
+    plt.rcParams.update({'font.size': 16})
+    if save_dir:
+        matplotlib.use('agg')
+    eras = active_eras.columns
+
+    # Check if the address exists in the DataFrame
+    if address in active_eras.index:
+        points = active_eras.loc[address].values
+    else:
+        # If the address is not found, create a list of zeros with the same length as the number of eras
+        points = [0] * len(eras)
+
+    # Determine activity status (1 for active, 0 for inactive)
+    activity = [1 if points[i] > 0 else 0 for i in range(len(points))]
+
+    # Create line plot for the activity
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    ax.plot(eras, activity, 'b-', label='Activity Status')  # Blue line for activity status
+
+    # Suppose we have updates (you need to define how updates are determined)
+    # Example updates, using the last 10 eras as updates
+    updates = activity[-10:]  # Replace this logic with your update determination
+    update_eras = eras[-10:]
+    ax.plot(update_eras, updates, 'bo', label='Updates')  # Blue points for updates
+
+    # Set bounds for y-axis, assuming the scores are binary (0 or 1)
+    bound_scores = [0, 1]
+    ax.set_ylim([bound_scores[0] - 0.05 * (bound_scores[1] - bound_scores[0]), 
+                bound_scores[1] + 0.05 * (bound_scores[1] - bound_scores[0])])
+
+    # Configure y-ticks to only show integers 0 and 1
+    ax.set_yticks([0, 1])
+
+    # Set titles and labels
+    ax.set_title("Validator Activity Over Eras")
+    ax.set_xlabel("Eras")
+    ax.set_ylabel("Active (1) or Inactive (0)")
+    ax.grid(True)
+
+
+    # Adjust layout for better visibility
+    plt.tight_layout()
+    plt.legend()
+
+
+
+    if save_dir:
+        fig.savefig(save_dir / f"{address}_era_activity.png", dpi=75, facecolor='white', transparent=False)            
+        plt.close(fig)    
 
 def make_figs_all_scores(scores_1kv_era, scores_1kv_era_update, descr_scores, bound_scores, address, save_dir=None):    
     plt.rcParams.update({'font.size': 16})

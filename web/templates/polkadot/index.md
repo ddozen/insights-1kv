@@ -67,6 +67,8 @@ Each dot is a new value given by the 1kv backend. Lines indicate no update. For 
 
 ![Region](STASH_era_score-region.png)
 
+![Active set inclusion](STASH_era_activity.png)
+
 
 
 
