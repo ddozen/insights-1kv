@@ -61,7 +61,7 @@ def generate(chain):
           "commission": "$COMMISSION$",
           "rank": "$RANK$",
           "faults": "$NB-FAULTS$",
-          "valid": "$VALID"}     
+          "valid": "$VALID$"}     
         sys.stdout.reconfigure(encoding='utf-8')
         for key, value in subs.items():
             with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:
