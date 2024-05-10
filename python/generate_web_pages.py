@@ -23,13 +23,13 @@ from scores_1kv import *
 import timeit
 
 
-PATH_JSON  = Path.cwd() / "../1kv_json"
-PATH_ONCHAIN = Path.cwd() / "../onchain"
-PATH_NEWFIGS = Path.cwd() / "../new_figs"
-PATH_INFO = Path.cwd() / "../info"
-PATH_TMP = Path.cwd() / "../tmp"
-PATH_WEB = Path.cwd() / "../web"
-PATH_DOKS_ROOT = Path.cwd() / "../doks"
+PATH_JSON  = Path.cwd() / "./1kv_json"
+PATH_ONCHAIN = Path.cwd() / "./onchain"
+PATH_NEWFIGS = Path.cwd() / "./new_figs"
+PATH_INFO = Path.cwd() / "./info"
+PATH_TMP = Path.cwd() / "./tmp"
+PATH_WEB = Path.cwd() / "./web"
+PATH_DOKS_ROOT = Path.cwd() / "./doks"
 
 
 
@@ -55,13 +55,15 @@ def generate(chain):
             for line in file:
                 # Hugo wants the time in UTC if no offset.
                 print(line.replace("DATETIME", f"{datetime.now(timezone.utc).isoformat()}"), end='')
-
+        print(row)
+        exit()
         # Subs for header
         subs = {"stash": "STASH",
           "name": "$TELEMETRY-NAME$" ,
           "commission": "$COMMISSION$",
           "rank": "$RANK$",
-          "faults": "$NB-FAULTS$"}     
+          "faults": "$NB-FAULTS$",
+          "valid": "$VALID"}     
         sys.stdout.reconfigure(encoding='utf-8')
         for key, value in subs.items():
             with fileinput.FileInput(addr_file_index, inplace=True, encoding='utf-8') as file:

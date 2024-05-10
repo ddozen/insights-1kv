@@ -17,11 +17,11 @@ import time
 
 from scores_1kv import *
 
-PATH_JSON  = Path.cwd() / "../1kv_json"
-PATH_ONCHAIN = Path.cwd() / "../onchain"
-PATH_NEWFIGS = Path.cwd() / "../new_figs"
-PATH_INFO = Path.cwd() / "../info"
-PATH_TMP = Path.cwd() / "../tmp"
+PATH_JSON  = Path.cwd() / "./1kv_json"
+PATH_ONCHAIN = Path.cwd() / "./onchain"
+PATH_NEWFIGS = Path.cwd() / "./new_figs"
+PATH_INFO = Path.cwd() / "./info"
+PATH_TMP = Path.cwd() / "./tmp"
 
 NB_ERAS_TO_PROCESS = 200
 
@@ -70,11 +70,12 @@ def compute_scores(chain):
 
     ## Simple extraction of scores and stats 
     # 28 Oct 2022: Valid is always None for recent. With drop na they get all removed!
-    fields = ["stash", "name", "score.datetime", "score.session", "dump.datetime", "rank", "faults", "commission", "location", "provider"] + list(descr_scores[chain].keys())
+    fields = ["stash", "name", "score.datetime", "score.session", "dump.datetime", "rank", "faults", "commission", "location", "provider", "valid"] + list(descr_scores[chain].keys())
     last_1kv = df_1kv[fields].dropna()      
     last_1kv = last_1kv.sort_values('dump.datetime').drop_duplicates(["stash"], keep='last').reset_index(drop=True)
     last_1kv.to_json(PATH_INFO / chain / "last_info_1kv.json")
-    last_1kv.to_feather(PATH_INFO / chain / "last_info_1kv.feather")    
+    last_1kv.to_feather(PATH_INFO / chain / "last_info_1kv.feather") 
+
     
     # score csv file for big dashboard table on landing page 
     last_score = last_1kv[["name", "stash", "rank", "score.total"]].copy()

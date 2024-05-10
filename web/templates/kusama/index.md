@@ -21,6 +21,9 @@ Commission: $COMMISSION$ %
 <--->
 
 Nb of faults: $NB-FAULTS$
+<--->
+
+Valid: $VALID$
 
 {{< /columns >}}  
 
