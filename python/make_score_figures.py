@@ -17,11 +17,11 @@ import time
 
 from scores_1kv import *
 
-PATH_JSON  = Path.cwd() / "./1kv_json"
-PATH_ONCHAIN = Path.cwd() / "./onchain"
-PATH_NEWFIGS = Path.cwd() / "./new_figs"
-PATH_INFO = Path.cwd() / "./info"
-PATH_TMP = Path.cwd() / "./tmp"
+PATH_JSON  = Path.cwd() / "../1kv_json"
+PATH_ONCHAIN = Path.cwd() / "../onchain"
+PATH_NEWFIGS = Path.cwd() / "../new_figs"
+PATH_INFO = Path.cwd() / "../info"
+PATH_TMP = Path.cwd() / "../tmp"
 
 NB_ERAS_TO_PROCESS = 200
 

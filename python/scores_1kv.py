@@ -25,8 +25,6 @@ def read_1kv_json(json_dir, oldest_datetime=-1):
             df['dump.datetime'] = pd.to_datetime(datetime, unit='s')
             # df['dump.datetime'] = datetime
             df = df.reset_index(drop=True)
-            if 'valid' not in df.columns:
-                df['valid'] = False
             df_s.append(df)
         # else:
         #     print(f"Skipped {datetime}")

@@ -23,13 +23,13 @@ from scores_1kv import *
 import timeit
 
 
-PATH_JSON  = Path.cwd() / "./1kv_json"
-PATH_ONCHAIN = Path.cwd() / "./onchain"
-PATH_NEWFIGS = Path.cwd() / "./new_figs"
-PATH_INFO = Path.cwd() / "./info"
-PATH_TMP = Path.cwd() / "./tmp"
-PATH_WEB = Path.cwd() / "./web"
-PATH_DOKS_ROOT = Path.cwd() / "./doks"
+PATH_JSON  = Path.cwd() / "../1kv_json"
+PATH_ONCHAIN = Path.cwd() / "../onchain"
+PATH_NEWFIGS = Path.cwd() / "../new_figs"
+PATH_INFO = Path.cwd() / "../info"
+PATH_TMP = Path.cwd() / "../tmp"
+PATH_WEB = Path.cwd() / "../web"
+PATH_DOKS_ROOT = Path.cwd() / "../doks"
 
 
 
