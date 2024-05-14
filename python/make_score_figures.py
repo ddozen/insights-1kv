@@ -126,7 +126,7 @@ def compute_scores(chain):
     save_dir = PATH_NEWFIGS / chain
 
     # for addr in df_stash['stash']:    
-    #     if addr == '1q5QgXCsasUtjvwq8ByT5QPivNgidUSR55c4kFJnjKSiF4q':
+    #     if addr == 'GM31KcErdS3ob8wmFSbLycccJ6YGvvTXLBAawd6d9wkAxqj':
     #         make_figs_active(filtered_df, addr, save_dir)  
     # exit()  
     Parallel(n_jobs=4)(delayed(make_figs_active)(filtered_df, a, save_dir) for a in df_stash['stash']) 

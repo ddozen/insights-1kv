@@ -207,6 +207,7 @@ def make_figs_active(active_eras, address, save_dir=None):
     columns_list = active_eras.columns[1:].tolist()
 
 
+
     if address in active_eras['index'].values:
         # Copy the activity values of the eras
         validator_row = active_eras[active_eras['index'] == address]
@@ -216,16 +217,13 @@ def make_figs_active(active_eras, address, save_dir=None):
         activity = [int(i) for i in row_list]
     else:
         activity = [0] * len(columns_list)
-
+    update_eras =  list(map(int, columns_list))
     # Create line plot for the activity
     fig, ax = plt.subplots(figsize=(8, 4.8))
-    ax.plot(columns_list, activity, 'b-')  # Blue line for activity status
+    ax.plot(update_eras, activity, 'b-')  # Blue line for activity status
 
-    # Suppose we have updates (you need to define how updates are determined)
-    # Example updates, using the last 10 eras as updates
-    updates = activity  # Replace this logic with your update determination
-    update_eras = columns_list
-    ax.plot(update_eras, updates, 'bo')  # Blue points for updates
+
+    ax.plot(update_eras, activity, 'bo')  # Blue points for updates
 
     # Set bounds for y-axis, assuming the scores are binary (0 or 1)
     bound_scores = [0, 1]
@@ -243,11 +241,10 @@ def make_figs_active(active_eras, address, save_dir=None):
 
     # Adjust layout for better visibility
     plt.tight_layout()
-
-
     if save_dir:
         fig.savefig(save_dir / f"{address}_era_activity.png", dpi=75, facecolor='white', transparent=False)            
         plt.close(fig)    
+
 
 def make_figs_all_scores(scores_1kv_era, scores_1kv_era_update, descr_scores, bound_scores, address, save_dir=None):    
     plt.rcParams.update({'font.size': 16})
