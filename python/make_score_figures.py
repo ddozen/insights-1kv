@@ -96,49 +96,39 @@ def compute_scores(chain):
     era_reward_onchain = df_era_reward_onchain.pivot(index="address", columns="era", values="points").replace(np.nan, 0)
     # print(era_reward_onchain)
     try:
-        era_reward_onchain200 = pd.read_feather(PATH_ONCHAIN / chain / "validator_active_data.feather")
+        era_reward_onchain200 = pd.read_feather(PATH_ONCHAIN / chain / "eras_activity.feather")
         print("File loaded successfully.")
     except FileNotFoundError:
-        era_reward_onchain200 = pd.DataFrame()
-        print("File not found. Creating an empty DataFrame.")
+        print("eras_activity.feather File not found")
+        exit()
     # Assuming era_reward_onchain200 and era_reward_onchain are already defined DataFrames
 
     # Check if era_reward_onchain200 is empty
     if era_reward_onchain200.empty:
-        # If empty, directly use all era columns from era_reward_onchain
-        # Ensure columns are treated as strings to check for digits
-        new_eras = [col for col in era_reward_onchain.columns if str(col).isdigit()]
-        era_reward_onchain200 = era_reward_onchain[new_eras]
+        print("era_reward_onchain200 is empty")
+        exit()
+ 
     else:
         # If not empty, identify the latest era in the current DataFrame
         # Convert column names to string to handle the integer type
         latest_era = max(int(col) for col in era_reward_onchain200.columns if str(col).isdigit())
 
-        # Filter out new data that includes eras greater than the latest_era
-        new_eras = [col for col in era_reward_onchain.columns if str(col).isdigit() and int(col) > latest_era]
 
-        # If there are new eras to add, combine the new era data with the existing DataFrame
-        if new_eras:
-            new_data = era_reward_onchain[new_eras]
-            era_reward_onchain200 = pd.concat([era_reward_onchain200, new_data], axis=1)
-
-    # Ensure the DataFrame only retains the last 200 columns (eras)
-    if len(era_reward_onchain200.columns) > NB_ERAS_TO_PROCESS:
-        era_reward_onchain200 = era_reward_onchain200.iloc[:, -NB_ERAS_TO_PROCESS:]
-    
-    era_reward_onchain200.to_feather(PATH_ONCHAIN / chain / "validator_active_data.feather") 
 
     # Check if each era in the list actually exists in the DataFrame columns
-    existing_eras = [era for era in eras_list if era in era_reward_onchain200.columns]
+    existing_eras = [str(era) for era in eras_list if str(era) in era_reward_onchain200.columns]
 
     # Use the existing eras to filter the DataFrame
-    filtered_df = era_reward_onchain200.loc[:, existing_eras]
+    filtered_df = era_reward_onchain200.loc[:, ['index'] + existing_eras]
+
 
     logging.info("Making activity figures")
     save_dir = PATH_NEWFIGS / chain
 
     # for addr in df_stash['stash']:    
-    #     make_figs_active(filtered_df, addr, save_dir)    
+    #     if addr == '1q5QgXCsasUtjvwq8ByT5QPivNgidUSR55c4kFJnjKSiF4q':
+    #         make_figs_active(filtered_df, addr, save_dir)  
+    # exit()  
     Parallel(n_jobs=4)(delayed(make_figs_active)(filtered_df, a, save_dir) for a in df_stash['stash']) 
 
     # Calculate time stamps of eras so we can compare with data reported by 1kv json

@@ -204,26 +204,27 @@ def make_figs_active(active_eras, address, save_dir=None):
     plt.rcParams.update({'font.size': 16})
     if save_dir:
         matplotlib.use('agg')
-    eras = active_eras.columns
+    columns_list = active_eras.columns[1:].tolist()
 
-    # Check if the address exists in the DataFrame
-    if address in active_eras.index:
-        points = active_eras.loc[address].values
+
+    if address in active_eras['index'].values:
+        # Copy the activity values of the eras
+        validator_row = active_eras[active_eras['index'] == address]
+        row_list = validator_row.iloc[0, 1:].tolist()
+
+        # Convert to a list of integers
+        activity = [int(i) for i in row_list]
     else:
-        # If the address is not found, create a list of zeros with the same length as the number of eras
-        points = [0] * len(eras)
-
-    # Determine activity status (1 for active, 0 for inactive)
-    activity = [1 if points[i] > 0 else 0 for i in range(len(points))]
+        activity = [0] * len(columns_list)
 
     # Create line plot for the activity
     fig, ax = plt.subplots(figsize=(8, 4.8))
-    ax.plot(eras, activity, 'b-')  # Blue line for activity status
+    ax.plot(columns_list, activity, 'b-')  # Blue line for activity status
 
     # Suppose we have updates (you need to define how updates are determined)
     # Example updates, using the last 10 eras as updates
     updates = activity  # Replace this logic with your update determination
-    update_eras = eras
+    update_eras = columns_list
     ax.plot(update_eras, updates, 'bo')  # Blue points for updates
 
     # Set bounds for y-axis, assuming the scores are binary (0 or 1)
@@ -242,8 +243,6 @@ def make_figs_active(active_eras, address, save_dir=None):
 
     # Adjust layout for better visibility
     plt.tight_layout()
-    plt.legend()
-
 
 
     if save_dir:
